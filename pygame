@@ -8,7 +8,7 @@ robot = Robot(left=(12,16), right=(21,20))
 pygame.init()
 screen = pygame.display.set_mode((480,500))
 
-#player = pygame.image.load("block.png")
+player = pygame.image.load("block.png")
 
 block_x = 200
 block_y = 200
@@ -21,7 +21,7 @@ while main_loop:
 
     screen.fill(0)
 
-   # screen.blit(player,(block_x,block_y))
+    screen.blit(player,(block_x,block_y))
 
     pygame.display.flip()
 
