@@ -1,0 +1,69 @@
+import pygame
+from pygame.locals import *
+from time import sleep
+from gpiozero import Robot
+
+robot = Robot(left=(12,16), right=(21,20))
+
+pygame.init()
+screen = pygame.display.set_mode((480,500))
+
+#player = pygame.image.load("block.png")
+
+block_x = 200
+block_y = 200
+keys=[False,False,False,False]
+
+main_loop = 1
+while main_loop:
+
+    pygame.display.set_caption('Robot')
+
+    screen.fill(0)
+
+   # screen.blit(player,(block_x,block_y))
+
+    pygame.display.flip()
+
+
+    if keys[0]==True:
+        robot.left()
+    if keys[1]==True:
+        robot.right()
+    if keys[2]==True:
+        robot.forward()
+    if keys[3]==True:
+        robot.backward()
+
+    if keys[0]==False and keys[1]==False and keys[2]==False and keys[3]==False:
+        robot.stop()
+
+    for event in pygame.event.get():
+        if event.type==pygame.QUIT:
+            pygame.quit()
+            exit(0)
+
+        if event.type == pygame.KEYDOWN:
+            if event.key==K_LEFT:
+                keys[0]=True
+                print("izquierda")
+            elif event.key==K_RIGHT:
+                keys[1]=True
+                print("derecha")
+            elif event.key==K_UP:
+                keys[2]=True
+                print("adelante")
+            elif event.key==K_DOWN:
+                keys[3]=True
+                print("atras")
+
+
+        if event.type == pygame.KEYUP:
+            if event.key==K_LEFT:
+                keys[0]=False
+            elif event.key==K_RIGHT:
+                keys[1]=False
+            elif event.key==K_UP:
+                keys[2]=False
+            elif event.key==K_DOWN:
+                keys[3]=False
