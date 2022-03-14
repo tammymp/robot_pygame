@@ -1,9 +1,13 @@
 import pygame
 from pygame.locals import *
 from time import sleep
-from gpiozero import Robot
+from gpiozero import Robot, Motor
+from adafruit_servokit import ServoKit
 
 robot = Robot(left=(12,16), right=(21,20))
+brazo = Motor(7,8)
+mano = Motor(9,10)
+kit = ServoKit(channels=16)
 
 pygame.init()
 screen = pygame.display.set_mode((480,500))
@@ -12,7 +16,7 @@ player = pygame.image.load("block.png")
 
 block_x = 200
 block_y = 200
-keys=[False,False,False,False]
+keys=[False,False,False,False, False, False, False, False, False, False, False]
 
 main_loop = 1
 while main_loop:
@@ -34,9 +38,27 @@ while main_loop:
         robot.forward()
     if keys[3]==True:
         robot.backward()
+    if keys [4]==True:
+        brazo.backward()
+    if keys [5]==True:
+        brazo.forward()
+    if keys [6]==True:
+        mano.forward()
+    if keys[7]==True:
+        mano.backward()
+    if keys[8]==True:
+        kit.servo[0].angle = 0
+    if keys[9]==True:
+        kit.servo[0].angle = 90
+    if keys[10]==True:
+        kit.servo[0].angle = 180
 
     if keys[0]==False and keys[1]==False and keys[2]==False and keys[3]==False:
         robot.stop()
+    if keys[4]==False and keys[5]== False:
+        brazo.stop()
+    if keys[6]== False and keys[7]==False:
+        mano.stop()
 
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
@@ -56,7 +78,27 @@ while main_loop:
             elif event.key==K_DOWN:
                 keys[3]=True
                 print("atras")
-
+            elif event.key==K_w:
+                keys[4]=True
+                print("arriba")
+            elif event.key==K_s:
+                keys[5]=True
+                print("abajo")
+            elif event.key==K_a:
+                keys[6]=True
+                print("abrir")
+            elif event.key==K_d:
+                keys[7]=True
+                print("cerrar")
+            elif event.key==K_c:
+                keys[8]=True
+                print("Giro hacia la derecha")
+            elif event.key==K_x:
+                keys[9]=True
+                print("Va hacia el frente")
+            elif event.key==K_z:
+                keys[10]=True
+                print("Gira hacia la izquierda")
 
         if event.type == pygame.KEYUP:
             if event.key==K_LEFT:
@@ -67,3 +109,17 @@ while main_loop:
                 keys[2]=False
             elif event.key==K_DOWN:
                 keys[3]=False
+            elif event.key==K_w:
+                keys[4]=False
+            elif event.key==K_s:
+                keys[5]=False
+            elif event.key==K_a:
+                keys[6]=False
+            elif event.key==K_d:
+                keys[7]=False
+            elif event.key==K_c:
+                keys[8]=False
+            elif event.key==K_x:
+                keys[9]=False
+            elif event.key==K_d:
+                keys[10]=False
